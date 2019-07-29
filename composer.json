@@ -6,11 +6,11 @@
     "Symfony",
     "filter"
   ],
-  "homepage": "https://github.com/sergeyKhashimov/datafilterbundle.git",
+  "homepage": "https://github.com/sergeyKhashimov/data-filter-bundle.git",
   "license": "MIT",
   "authors": [
     {
-      "name": "Sergey H",
+      "name": "Sergey Hashimov",
       "email": "hashimov.sergey@gmail.com",
       "role": "Developer"
     }
@@ -20,15 +20,11 @@
     "php": "^7.1.3",
     "ext-ctype": "*",
     "ext-iconv": "*",
-    "symfony/console": "4.3.*",
-    "symfony/dotenv": "4.3.*",
     "symfony/flex": "^1.3.1",
     "symfony/framework-bundle": "4.3.*",
-    "symfony/yaml": "4.3.*",
     "knplabs/knp-paginator-bundle": "^4.0",
     "doctrine/doctrine-bundle": "^1.6.10",
-    "doctrine/orm": "^2.5.11",
-    "symfony/orm-pack": "^1.0"
+    "doctrine/orm": "^2.5.11"
   },
   "require-dev": {
     "symfony/maker-bundle": "^1.12",

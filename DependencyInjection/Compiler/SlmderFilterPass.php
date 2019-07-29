@@ -5,6 +5,9 @@
 
 namespace Slmder\SlmderFilterBundle\DependencyInjection\Compiler;
 
+use Slmder\SlmderFilterBundle\DependencyInjection\Configuration;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -23,16 +26,33 @@ class SlmderFilterPass implements CompilerPassInterface
         if (!$container->has('filter.query_builder_manager')) {
             return;
         }
+        $configs = $container->getExtensionConfig('slmder_filter');
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
         $managerDef = $container->findDefinition('filter.query_builder_manager');
         $taggedStrategies = $container->findTaggedServiceIds('filter.handler_strategy');
         foreach ($taggedStrategies as $id => $tags) {
             $managerDef->addMethodCall('addStrategy', [new Reference($id)]);
         }
-
-        $joinMakerDef = $container->findDefinition('filter.join_maker');
-        $taggedCheckers = $container->findTaggedServiceIds('filter.availability_checker');
-        foreach ($taggedCheckers as $id => $tags) {
-            $joinMakerDef->addMethodCall('addChecker', [new Reference($id)]);
+        if ($config['checkers_enabled']) {
+            $joinMakerDef = $container->findDefinition('filter.join_maker');
+            $taggedCheckers = $container->findTaggedServiceIds('filter.availability_checker');
+            foreach ($taggedCheckers as $id => $tags) {
+                $joinMakerDef->addMethodCall('addChecker', [new Reference($id)]);
+            }
         }
     }
+
+    /**
+     * @param ConfigurationInterface $configuration
+     * @param array $configs
+     * @return mixed
+     */
+    private function processConfiguration(ConfigurationInterface $configuration, array $configs)
+    {
+        $processor = new Processor();
+
+        return $processor->processConfiguration($configuration, $configs);
+    }
+
 }

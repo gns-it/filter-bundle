@@ -21,7 +21,13 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('data_filter');
+        $treeBuilder = new TreeBuilder('slmder_filter');
+        $treeBuilder->getRootNode()
+                ->children()
+                    ->booleanNode('checkers_enabled')->defaultTrue()->end()
+                ->end()
+            ->end();
+
         return $treeBuilder;
     }
 }

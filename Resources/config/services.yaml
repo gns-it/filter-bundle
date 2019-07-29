@@ -1,0 +1,51 @@
+services:
+
+  filter.expression_builder:
+    class:  Slmder\SlmderFilterBundle\Filtration\Common\ExpressionBuilder
+
+  filter.static_availability_checker:
+    tags: ['filter.availability_checker']
+    class:  Slmder\SlmderFilterBundle\Filtration\Common\Field\Impl\StaticFieldAvailabilityChecker
+
+  filter.entity_info:
+    class:  Slmder\SlmderFilterBundle\Filtration\Common\EntityInfo
+    arguments:
+      ['@doctrine.orm.entity_manager']
+
+  filter.join_maker:
+    class:  Slmder\SlmderFilterBundle\Filtration\Common\JoinMaker
+    arguments:
+      ['@filter.entity_info', '@filter.static_availability_checker']
+
+  filter.path_provider:
+    class:  Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\Impl\PropertyPathProvider
+
+  filter.disjunction_strategy:
+    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\DisjunctionQueryHandlerStrategy
+    tags: ['filter.handler_strategy']
+    arguments:
+      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider']
+
+  filter.simple_filter_strategy:
+    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\SimpleFilterQueryHandlerStrategy
+    tags: ['filter.handler_strategy']
+    arguments:
+      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider']
+
+  filter.sort_strategy:
+    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\SortQueryHandlerStrategy
+    tags: ['filter.handler_strategy']
+    arguments:
+      ['@filter.join_maker', '@filter.entity_info', '@filter.expression_builder', '@filter.path_provider']
+
+  filter.query_builder_manager:
+    class: Slmder\SlmderFilterBundle\Filtration\QueryBuilderManager
+    arguments:
+      ['@request_stack', '@filter.disjunction_strategy', '@filter.simple_filter_strategy', '@filter.sort_strategy']
+
+  filter.filtration_subscriber:
+    class: Slmder\SlmderFilterBundle\Filtration\EventListener\KnpPaginationSubscriber
+    tags: ['kernel.event_subscriber']
+    arguments:
+      ['@filter.query_builder_manager']
+

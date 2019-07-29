@@ -1,0 +1,42 @@
+{
+  "name": "slmder/data-filter-bundle",
+  "type": "symfony-bundle",
+  "description": "Symfony data filter bundle",
+  "keywords": [
+    "Symfony",
+    "filter"
+  ],
+  "homepage": "https://github.com/sergeyKhashimov/datafilterbundle.git",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sergey H",
+      "email": "hashimov.sergey@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^7.1.3",
+    "ext-ctype": "*",
+    "ext-iconv": "*",
+    "symfony/console": "4.3.*",
+    "symfony/dotenv": "4.3.*",
+    "symfony/flex": "^1.3.1",
+    "symfony/framework-bundle": "4.3.*",
+    "symfony/yaml": "4.3.*",
+    "knplabs/knp-paginator-bundle": "^4.0",
+    "doctrine/doctrine-bundle": "^1.6.10",
+    "doctrine/orm": "^2.5.11",
+    "symfony/orm-pack": "^1.0"
+  },
+  "require-dev": {
+    "symfony/maker-bundle": "^1.12",
+    "symfony/debug-pack": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Slmder\\SlmderFilterBundle\\": "/"
+    }
+  }
+}

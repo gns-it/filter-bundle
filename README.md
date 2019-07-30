@@ -1,5 +1,14 @@
 **Knp pagination wrapper accessing filter & sort paginated collections of entities**
 
+**Configuration**
+
+```$xslt
+slmder_filter:
+    checkers_enabled: true  // Enables prop availability check for filter & sort
+    default_operator: like  // Defines default operator when absent
+    default_order_direction: ASC // Defines default order direction when absent
+```
+
 **Collection filters usage**
 
 ```$xslt

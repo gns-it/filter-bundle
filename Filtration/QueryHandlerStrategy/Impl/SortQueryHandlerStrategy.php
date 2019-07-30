@@ -5,11 +5,11 @@
 
 namespace Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl;
 
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\QueryBuilder;
 use Slmder\SlmderFilterBundle\Filtration\Common\{EntityInfo, ExpressionBuilder, JoinMaker, Model\PropertyPath};
 use Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPathProviderInterface;
 use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\HandlerStrategyInterface;
-use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -36,20 +36,26 @@ class SortQueryHandlerStrategy implements HandlerStrategyInterface
      */
     private $builder;
     /**
-     * @var PropertyPathMaker
+     * @var PropertyPathProviderInterface
      */
     private $provider;
+    /**
+     * @var string
+     */
+    private $defaultDirection;
 
     public function __construct(
         JoinMaker $joinMaker,
         EntityInfo $entityInfo,
         ExpressionBuilder $builder,
-        PropertyPathProviderInterface $provider
+        PropertyPathProviderInterface $provider,
+        string $defaultDirection
     ) {
         $this->joinMaker = $joinMaker;
         $this->entityInfo = $entityInfo;
         $this->builder = $builder;
         $this->provider = $provider;
+        $this->defaultDirection = $defaultDirection;
     }
 
     /**
@@ -70,7 +76,7 @@ class SortQueryHandlerStrategy implements HandlerStrategyInterface
         $paths = $this->provider->createPaths($query);
         /** @var PropertyPath $path */
         foreach ($paths as $path) {
-            $direction = Criteria::ASC;
+            $direction = $this->defaultDirection;
             if (!$path->emptyValue()) {
                 $direction = strtoupper($path->getValue());
             }

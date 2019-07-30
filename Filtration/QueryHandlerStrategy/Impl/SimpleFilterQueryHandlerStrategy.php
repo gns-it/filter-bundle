@@ -11,8 +11,7 @@ use Slmder\SlmderFilterBundle\Filtration\Common\{EntityInfo,
     Expression,
     ExpressionBuilder,
     JoinMaker,
-    Model\PropertyPath,
-    PropertyPathProvider\Impl\PropertyPathProvider};
+    Model\PropertyPath};
 use Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPathProviderInterface;
 use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\HandlerStrategyInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -44,17 +43,23 @@ class SimpleFilterQueryHandlerStrategy implements HandlerStrategyInterface
      * @var PropertyPathProviderInterface
      */
     private $provider;
+    /**
+     * @var string
+     */
+    private $defaultOperator;
 
     public function __construct(
         EntityInfo $entityInfo,
         JoinMaker $joinMaker,
         ExpressionBuilder $builder,
-        PropertyPathProviderInterface $provider
+        PropertyPathProviderInterface $provider,
+        string $defaultOperator
     ) {
         $this->entityInfo = $entityInfo;
         $this->joinMaker = $joinMaker;
         $this->provider = $provider;
         $this->builder = $builder;
+        $this->defaultOperator = $defaultOperator;
     }
 
     /**
@@ -77,7 +82,7 @@ class SimpleFilterQueryHandlerStrategy implements HandlerStrategyInterface
         /** @var PropertyPath $path */
         foreach ($paths as $path) {
             $aliasedPath = $this->joinMaker->make($queryBuilder, $path->getPath(), $rootAlias);
-            $operator = ExpressionBuilder::LIKE;
+            $operator = $this->defaultOperator;
             if (!$path->emptyOperator()) {
                 $operator = $path->getOperator();
             }

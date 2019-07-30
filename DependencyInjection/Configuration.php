@@ -25,6 +25,8 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->getRootNode()
                 ->children()
                     ->booleanNode('checkers_enabled')->defaultTrue()->end()
+                    ->scalarNode('default_operator')->defaultValue('like')->end()
+                    ->scalarNode('default_order_direction')->defaultValue('ASC')->end()
                 ->end()
             ->end();
 

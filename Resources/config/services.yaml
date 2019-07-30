@@ -15,28 +15,30 @@ services:
   filter.join_maker:
     class:  Slmder\SlmderFilterBundle\Filtration\Common\JoinMaker
     arguments:
-      ['@filter.entity_info', '@filter.static_availability_checker']
+      ['@filter.entity_info','slmder_filter.checkers_enabled']
 
   filter.path_provider:
     class:  Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\Impl\PropertyPathProvider
+    arguments:
+      ['%slmder_filter.default_operator%']
 
   filter.disjunction_strategy:
     class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\DisjunctionQueryHandlerStrategy
     tags: ['filter.handler_strategy']
     arguments:
-      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider']
+      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider', '%slmder_filter.default_operator%']
 
   filter.simple_filter_strategy:
     class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\SimpleFilterQueryHandlerStrategy
     tags: ['filter.handler_strategy']
     arguments:
-      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider']
+      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider','%slmder_filter.default_operator%']
 
   filter.sort_strategy:
     class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\SortQueryHandlerStrategy
     tags: ['filter.handler_strategy']
     arguments:
-      ['@filter.join_maker', '@filter.entity_info', '@filter.expression_builder', '@filter.path_provider']
+      ['@filter.join_maker', '@filter.entity_info', '@filter.expression_builder', '@filter.path_provider','%slmder_filter.default_order_direction%']
 
   filter.query_builder_manager:
     class: Slmder\SlmderFilterBundle\Filtration\QueryBuilderManager

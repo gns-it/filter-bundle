@@ -24,11 +24,16 @@ class JoinMaker
      * @var <FieldAvailabilityCheckerInterface>[]
      */
     private $checkers;
+    /**
+     * @var bool
+     */
+    private $checkersEnabled;
 
-    public function __construct(EntityInfo $entityInfo)
+    public function __construct(EntityInfo $entityInfo, bool $checkersEnabled)
     {
         $this->entityInfo = $entityInfo;
         $this->checkers = [];
+        $this->checkersEnabled = $checkersEnabled;
     }
 
     /**
@@ -57,13 +62,7 @@ class JoinMaker
                 if (!isset($relationColumns[$column])) {
                     throw  new BadRequestHttpException("$rootClassName does not have association '$column'.");
                 }
-                foreach ($this->checkers as $checker) {
-                    if (!$checker->available($rootClassName, $column)) {
-                        throw new NotAcceptableHttpException(
-                            "Operations with relation '$rootClassName::$column' are not available."
-                        );
-                    }
-                }
+                $this->availabilityCheck($rootClassName, $column);
                 $nextAlias = $alias.ucfirst($column);
                 if (!\in_array($nextAlias, $queryBuilder->getAllAliases(), true)) {
                     $queryBuilder->leftJoin("$alias.$column", $nextAlias);
@@ -73,17 +72,28 @@ class JoinMaker
                 $relationColumns = $this->entityInfo->getAssociationMappings($rootClassName);
             }
         }
-        foreach ($this->checkers as $checker) {
-            if (!$checker->available($rootClassName, $scalarColumn)) {
-                throw new NotAcceptableHttpException(
-                    "Operations with field '$rootClassName::$scalarColumn' are not available."
-                );
-            }
-        }
+        $this->availabilityCheck($rootClassName, $scalarColumn);
         if (!in_array($scalarColumn, $this->entityInfo->getFieldNames($rootClassName))) {
             throw  new BadRequestHttpException("$rootClassName does not have field '$scalarColumn'.");
         }
 
         return "$alias.$scalarColumn";
+    }
+
+    /**
+     * @param string $className
+     * @param string $field
+     */
+    public function availabilityCheck(string $className, string $field)
+    {
+        if ($this->checkersEnabled) {
+            foreach ($this->checkers as $checker) {
+                if (!$checker->available($className, $field)) {
+                    throw new NotAcceptableHttpException(
+                        "Operations with field '$className::$field' are not available."
+                    );
+                }
+            }
+        }
     }
 }

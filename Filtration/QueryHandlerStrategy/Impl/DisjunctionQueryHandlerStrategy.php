@@ -5,11 +5,15 @@
 
 namespace Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl;
 
-use Slmder\SlmderFilterBundle\Filtration\Common\{EntityInfo, Expression, ExpressionBuilder, JoinMaker, Model\PropertyPath};
-use Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPathProviderInterface;
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\HandlerStrategyInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
+use Slmder\SlmderFilterBundle\Filtration\Common\{EntityInfo,
+    Expression,
+    ExpressionBuilder,
+    JoinMaker,
+    Model\PropertyPath};
+use Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPathProviderInterface;
+use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\HandlerStrategyInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -36,20 +40,26 @@ class DisjunctionQueryHandlerStrategy implements HandlerStrategyInterface
      */
     private $builder;
     /**
-     * @var PropertyPathMaker
+     * @var PropertyPathProviderInterface
      */
     private $provider;
+    /**
+     * @var string
+     */
+    private $defaultOperator;
 
     public function __construct(
         EntityInfo $entityInfo,
         JoinMaker $joinMaker,
         ExpressionBuilder $builder,
-        PropertyPathProviderInterface $provider
+        PropertyPathProviderInterface $provider,
+        string $defaultOperator
     ) {
         $this->entityInfo = $entityInfo;
         $this->joinMaker = $joinMaker;
         $this->builder = $builder;
         $this->provider = $provider;
+        $this->defaultOperator = $defaultOperator;
     }
 
     /**
@@ -77,7 +87,7 @@ class DisjunctionQueryHandlerStrategy implements HandlerStrategyInterface
             /** @var PropertyPath $path */
             foreach ($paths as $path) {
                 $aliasedPath = $this->joinMaker->make($queryBuilder, $path->getPath(), $rootAlias);
-                $operator = ExpressionBuilder::LIKE;
+                $operator = $this->defaultOperator;
                 if (!$path->emptyOperator()) {
                     $operator = $path->getOperator();
                 }
@@ -98,7 +108,7 @@ class DisjunctionQueryHandlerStrategy implements HandlerStrategyInterface
             );
             foreach ($expressions as $expression) {
                 if ($expression->getParameter() instanceof ArrayCollection) {
-                    foreach ($expression->getParameter() as $param){
+                    foreach ($expression->getParameter() as $param) {
                         $queryBuilder->getParameters()->add($param);
                     }
                     continue;

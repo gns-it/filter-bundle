@@ -5,9 +5,9 @@
 
 namespace Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\Impl;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Slmder\SlmderFilterBundle\Filtration\Common\Model\PropertyPath;
 use Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPathProviderInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class PropertyPathMaker
@@ -15,6 +15,16 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class PropertyPathProvider implements PropertyPathProviderInterface
 {
+
+    /**
+     * @var string
+     */
+    private $defaultOperator;
+
+    public function __construct(string $defaultOperator)
+    {
+        $this->defaultOperator = $defaultOperator;
+    }
 
     /**
      * @param array $query
@@ -54,9 +64,10 @@ class PropertyPathProvider implements PropertyPathProviderInterface
     {
         $paths = new ArrayCollection();
         $entries = $this->createEntries($this->encodeQuery($query));
-        foreach ($entries as $path => $vars){
-            $paths->add(new PropertyPath($path, $vars['value']??'', $vars['operator']??'LIKE'));
+        foreach ($entries as $path => $vars) {
+            $paths->add(new PropertyPath($path, $vars['value'] ?? '', $vars['operator'] ?? $this->defaultOperator));
         }
+
         return $paths;
     }
 }

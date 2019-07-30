@@ -328,7 +328,7 @@ class ExpressionBuilder
      */
     public function in(string $aliasedPath, string $value)
     {
-        $value = explode('&', $value);
+        $value = explode('@', $value);
         $paramName = self::paramName($aliasedPath);
 
         return new Expression("$aliasedPath IN (:$paramName)", new Parameter($paramName, $value));
@@ -341,7 +341,7 @@ class ExpressionBuilder
      */
     public function nin(string $aliasedPath, string $value)
     {
-        $value = explode('&', $value);
+        $value = explode('@', $value);
         $paramName = self::paramName($aliasedPath);
 
         return new Expression("$aliasedPath NOT IN (:$paramName)", new Parameter($paramName, $value));

@@ -1,3 +1,4 @@
+**Knp pagination wrapper accessing filter & sort paginated collections of entities**
 
 **Collection filters usage**
 
@@ -29,7 +30,7 @@
         }, 
     },
     cfFilter:[
-        [
+       0:[ // Disjunction query must be an array on indexed arrays of definitions
             associationNameA: {
                 filedName: 'value'
             },
@@ -53,7 +54,7 @@
                     }
                 }
             }, 
-        ], [...], [...]    
+        ], 1:[...], 2:[...]    
     ],
     order:{
         associationNameA: {

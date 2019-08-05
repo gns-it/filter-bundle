@@ -119,6 +119,16 @@ class ExpressionBuilder
     /**
      * @var string
      */
+    public const IS_NULL = 'is_null';   //'HAVING COUNT(f.p) = :val'
+
+    /**
+     * @var string
+     */
+    public const IS_NOT_NULL = 'isnt_null';   //'HAVING COUNT(f.p) = :val'
+
+    /**
+     * @var string
+     */
     public const PAGE = 1;
 
     /**
@@ -153,7 +163,9 @@ class ExpressionBuilder
         self::IN,
         self::NIN,
         self::BETWEEN,
-        self::NOT_BETWEEN
+        self::NOT_BETWEEN,
+        self::IS_NOT_NULL,
+        self::IS_NULL,
     ];
 
     /**
@@ -174,7 +186,9 @@ class ExpressionBuilder
         self::NIN,
         self::BETWEEN,
         self::NOT_BETWEEN,
-        self::HAVING_COUNT_EQ
+        self::HAVING_COUNT_EQ,
+        self::IS_NOT_NULL,
+        self::IS_NULL,
     ];
 
     /**
@@ -230,6 +244,26 @@ class ExpressionBuilder
         $paramName = self::paramName($aliasedPath);
 
         return new Expression("COUNT($aliasedPath) = :$paramName", new Parameter($paramName, $value), 'having');
+    }
+
+    /**
+     * @param string $aliasedPath
+     * @param string $value
+     * @return Expression
+     */
+    public function is_null(string $aliasedPath, string $value)
+    {
+        return new Expression("$aliasedPath IS NULL", null, 'where');
+    }
+
+    /**
+     * @param string $aliasedPath
+     * @param string $value
+     * @return Expression
+     */
+    public function isnt_null(string $aliasedPath, string $value)
+    {
+        return new Expression("$aliasedPath IS NOT NULL", null, 'where');
     }
 
     /**

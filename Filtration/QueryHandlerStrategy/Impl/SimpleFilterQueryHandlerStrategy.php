@@ -97,14 +97,15 @@ class SimpleFilterQueryHandlerStrategy implements HandlerStrategyInterface
             } else {
                 $queryBuilder->andWhere($expression->getExpr());
             }
-            if ($expression->getParameter() instanceof ArrayCollection) {
+            if ($expression->getParameter() && $expression->getParameter() instanceof ArrayCollection) {
                 foreach ($expression->getParameter() as $param) {
                     $queryBuilder->getParameters()->add($param);
                 }
                 continue;
             }
-            $queryBuilder->getParameters()->add($expression->getParameter());
-
+            if ($expression->getParameter()) {
+                $queryBuilder->getParameters()->add($expression->getParameter());
+            }
         }
     }
 }

@@ -22,7 +22,7 @@
     "ext-ctype": "*",
     "ext-iconv": "*",
     "symfony/flex": "^1.0",
-    "symfony/framework-bundle": "^4.0",
+    "symfony/framework-bundle": "^4.1.0",
     "knplabs/knp-paginator-bundle": "^4.0",
     "doctrine/doctrine-bundle": "^1.6.10",
     "doctrine/orm": "^2.5.11"
@@ -34,6 +34,11 @@
   "autoload": {
     "psr-4": {
       "Slmder\\SlmderFilterBundle\\": "/"
+    }
+  },
+  "extra": {
+    "symfony": {
+      "id": "01DS2Y3J83HK3BBQRYN5EHJ08V"
     }
   }
 }

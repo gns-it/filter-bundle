@@ -9,9 +9,7 @@ slmder_filter:
     default_order_direction: # enum (ASC,DESC) (default ASC) Defines default order direction when absent.
     trigger_on_pagination_items: # bool (default true) Triggers filtration on knp_pager.items event.
 ```
-
 **Collection filters usage**
-
 ```$xslt
 {
     filter:{

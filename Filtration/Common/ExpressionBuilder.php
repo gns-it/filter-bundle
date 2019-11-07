@@ -19,6 +19,11 @@ class ExpressionBuilder
     /**
      * @var string
      */
+    public const IN_DELIMITER = '|';
+
+    /**
+     * @var string
+     */
     public const BETWEEN_PATTERN = '/^.*@.*$/';
 
     /**
@@ -362,7 +367,7 @@ class ExpressionBuilder
      */
     public function in(string $aliasedPath, string $value)
     {
-        $value = explode('@', $value);
+        $value = explode(self::IN_DELIMITER, $value);
         $paramName = self::paramName($aliasedPath);
 
         return new Expression("$aliasedPath IN (:$paramName)", new Parameter($paramName, $value));
@@ -375,7 +380,7 @@ class ExpressionBuilder
      */
     public function nin(string $aliasedPath, string $value)
     {
-        $value = explode('@', $value);
+        $value = explode(self::IN_DELIMITER, $value);
         $paramName = self::paramName($aliasedPath);
 
         return new Expression("$aliasedPath NOT IN (:$paramName)", new Parameter($paramName, $value));

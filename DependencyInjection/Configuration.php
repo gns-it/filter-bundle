@@ -17,7 +17,7 @@ class Configuration implements ConfigurationInterface
 
     /**
      * Generates the configuration tree builder.
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder
+     * @return TreeBuilder The tree builder
      */
     public function getConfigTreeBuilder()
     {
@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->getRootNode()
                 ->children()
                     ->booleanNode('checkers_enabled')->defaultTrue()->end()
+                    ->booleanNode('trigger_on_pagination_items')->defaultTrue()->end()
                     ->scalarNode('default_operator')->defaultValue('like')->end()
                     ->scalarNode('default_order_direction')->defaultValue('ASC')->end()
                 ->end()

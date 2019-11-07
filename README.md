@@ -4,9 +4,10 @@
 
 ```$xslt
 slmder_filter:
-    checkers_enabled: true  // Enables prop availability check for filter & sort
-    default_operator: like  // Defines default operator when absent
-    default_order_direction: ASC // Defines default order direction when absent
+    checkers_enabled: # bool (default true) Enables prop availability check for filter & sort.
+    default_operator: # string (default like) Defines default operator when absent.
+    default_order_direction: # enum (ASC,DESC) (default ASC) Defines default order direction when absent.
+    trigger_on_pagination_items: # bool (default true) Triggers filtration on knp_pager.items event.
 ```
 
 **Collection filters usage**
@@ -113,10 +114,10 @@ __________________________________________________________________________
 |    'gtef     |       Greater than or equal (>= with time to 00:00:00)  |
 |______________|_________________________________________________________|
 |              |                                                         |
-|    'in'      |       In (IN delimiter "@")                             |
+|    'in'      |       In (IN delimiter "|")                             |
 |______________|_________________________________________________________|
 |              |                                                         |
-|    'nin'     |       Not in (NOT IN delimiter "@")                     |
+|    'nin'     |       Not in (NOT IN delimiter "|")                     |
 |______________|_________________________________________________________|
 |              |                                                         |
 |    'like     |       Like (LIKE)                                       |

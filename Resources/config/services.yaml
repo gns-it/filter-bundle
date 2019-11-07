@@ -49,5 +49,5 @@ services:
     class: Slmder\SlmderFilterBundle\Filtration\EventListener\KnpPaginationSubscriber
     tags: ['kernel.event_subscriber']
     arguments:
-      ['@filter.query_builder_manager']
+      ['@filter.query_builder_manager','slmder_filter.trigger_on_pagination_items']
 

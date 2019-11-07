@@ -32,6 +32,7 @@ class SlmderFilterPass implements CompilerPassInterface
         $container->setParameter('slmder_filter.checkers_enabled', $config['checkers_enabled']);
         $container->setParameter('slmder_filter.default_operator', $config['default_operator']);
         $container->setParameter('slmder_filter.default_order_direction', $config['default_order_direction']);
+        $container->setParameter('slmder_filter.trigger_on_pagination_items', $config['trigger_on_pagination_items']);
         $managerDef = $container->findDefinition('filter.query_builder_manager');
         $taggedStrategies = $container->findTaggedServiceIds('filter.handler_strategy');
         foreach ($taggedStrategies as $id => $tags) {

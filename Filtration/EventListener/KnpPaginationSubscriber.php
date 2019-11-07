@@ -25,10 +25,15 @@ class KnpPaginationSubscriber implements EventSubscriberInterface
      * @var QueryBuilderManagerInterface
      */
     private $manager;
+    /**
+     * @var bool
+     */
+    private $triggerOnItems;
 
-    public function __construct(QueryBuilderManagerInterface $manager)
+    public function __construct(QueryBuilderManagerInterface $manager, bool $triggerOnItems = true)
     {
         $this->manager = $manager;
+        $this->triggerOnItems = $triggerOnItems;
     }
 
     /**
@@ -36,6 +41,9 @@ class KnpPaginationSubscriber implements EventSubscriberInterface
      */
     public function onItems(ItemsEvent $event)
     {
+        if(!$this->triggerOnItems){
+            return;
+        }
         if (!$event->target instanceof QueryBuilder) {
             return;
         }

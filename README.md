@@ -1,5 +1,11 @@
 **Knp pagination wrapper accessing filter & sort paginated collections of entities**
 
+**Instalation**
+
+```$xslt
+composer require slmder/data-filter-bundle "1.0"
+```
+
 **Configuration**
 
 ```$xslt

@@ -1,7 +1,6 @@
 {
   "name": "slmder/data-filter-bundle",
   "type": "symfony-bundle",
-  "version": "1.0.0",
   "description": "Symfony data filter bundle",
   "keywords": [
     "Symfony",

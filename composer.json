@@ -21,7 +21,7 @@
     "ext-ctype": "*",
     "ext-iconv": "*",
     "symfony/flex": "^1.0",
-    "symfony/framework-bundle": "~4.0",
+    "symfony/framework-bundle": "*",
     "knplabs/knp-paginator-bundle": "^4.0",
     "doctrine/doctrine-bundle": "^1.6.10",
     "doctrine/orm": "^2.5.11"

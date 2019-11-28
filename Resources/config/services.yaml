@@ -3,7 +3,7 @@ services:
   filter.expression_builder:
     class:  Slmder\SlmderFilterBundle\Filtration\Common\ExpressionBuilder
     arguments:
-      ['@doctrine.orm.entity_manager.abstract']
+      ['@doctrine.orm.entity_manager']
 
   filter.static_availability_checker:
     tags: ['filter.availability_checker']
@@ -12,7 +12,7 @@ services:
   filter.entity_info:
     class:  Slmder\SlmderFilterBundle\Filtration\Common\EntityInfo
     arguments:
-      ['@doctrine.orm.entity_manager.abstract']
+      ['@doctrine.orm.entity_manager']
 
   filter.join_maker:
     class:  Slmder\SlmderFilterBundle\Filtration\Common\JoinMaker

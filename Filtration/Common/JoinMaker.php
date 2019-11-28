@@ -66,11 +66,7 @@ class JoinMaker implements RelationResolverInterface
             if (!isset($props[$prop])) {
                 throw  new BadRequestHttpException("$className does not have property '$prop'.");
             }
-            if (!$this->checker->available($className, $prop)) {
-                throw new NotAcceptableHttpException(
-                    "Operations with relation '$className::$prop' are not available."
-                );
-            }
+            $this->availabilityCheck($className, $prop);
             $isCollectionValuedAssociation = $this->entityInfo->isCollectionValuedAssociation($className, $prop);
             $isAssociation = $this->isAssociation($props, $prop);
             if (!$isAssociation) {

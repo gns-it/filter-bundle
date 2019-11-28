@@ -6,15 +6,15 @@
 namespace Slmder\SlmderFilterBundle\Filtration;
 
 use Doctrine\ORM\QueryBuilder;
+use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Configuration;
 use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\HandlerStrategyInterface;
 use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\DisjunctionQueryHandlerStrategy as Disjunction;
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\SimpleFilterQueryHandlerStrategy as Simple;
+use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\ConjunctionFilterQueryHandlerStrategy as Simple;
 use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\SortQueryHandlerStrategy as Sort;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class QueryBuilderManager
- * @package App\Filtration
  */
 class QueryBuilderManager implements QueryBuilderManagerInterface
 {
@@ -54,7 +54,11 @@ class QueryBuilderManager implements QueryBuilderManagerInterface
         /** @var HandlerStrategyInterface $handler */
         foreach ($this->handlerStrategies as $handler) {
             if ($query->has($handler->getProcessingKeyName())) {
-                $handler->handle($queryBuilder, $query->get($handler->getProcessingKeyName()));
+                $params = $query->get($handler->getProcessingKeyName());
+                $defaultOptions = $handler->getDefaultOptions();
+                $config = new Configuration($handler,$params['config'] ?? [], $defaultOptions);
+                unset($params['config']);
+                $handler->handle($queryBuilder, $params, $config);
             }
         }
     }

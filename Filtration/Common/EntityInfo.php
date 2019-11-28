@@ -11,7 +11,6 @@ use Doctrine\ORM\QueryBuilder;
 /**
  * Helps to simply retrieve entity metaData
  * Class EntityInfo
- * @package App\Filtration\Common
  */
 class EntityInfo
 {
@@ -44,6 +43,18 @@ class EntityInfo
     }
 
     /**
+     * @param string $className
+     * @return array
+     */
+    public function getAllProperties(string $className)
+    {
+        $relationColumns = $this->getAssociationMappings($className);
+        $fieldNames = $this->getFieldNames($className);
+
+        return array_merge($relationColumns, array_combine($fieldNames, $fieldNames));
+    }
+
+    /**
      * @param QueryBuilder $queryBuilder
      * @return string
      */
@@ -59,5 +70,15 @@ class EntityInfo
     public function rootAlias(QueryBuilder $queryBuilder): string
     {
         return $queryBuilder->getRootAliases()[0];
+    }
+
+    /**
+     * @param string $className
+     * @param $prop
+     * @return bool
+     */
+    public function isCollectionValuedAssociation(string $className, $prop)
+    {
+        return $this->em->getClassMetadata($className)->isCollectionValuedAssociation($prop);
     }
 }

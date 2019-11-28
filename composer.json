@@ -24,7 +24,8 @@
     "symfony/framework-bundle": "~4.1",
     "knplabs/knp-paginator-bundle": "^4.0",
     "doctrine/doctrine-bundle": "^1.6.10",
-    "doctrine/orm": "^2.5.11"
+    "doctrine/orm": "^2.5.11",
+    "symfony/options-resolver": "~4.1"
   },
   "require-dev": {
     "symfony/maker-bundle": "^1.12",

@@ -9,7 +9,7 @@ use Slmder\SlmderFilterBundle\Filtration\Common\Field\FieldAvailabilityCheckerIn
 
 /**
  * Class StaticFieldAvailabilityChecker
- * @package App\Filtration\Common\Field\Impl
+ * 
  */
 class StaticFieldAvailabilityChecker implements FieldAvailabilityCheckerInterface
 {

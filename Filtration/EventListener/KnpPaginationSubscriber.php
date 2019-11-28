@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class KnpPaginationSubscriber
- * @package App\Filtration\EventListener
+ * 
  */
 class KnpPaginationSubscriber implements EventSubscriberInterface
 {

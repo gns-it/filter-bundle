@@ -11,7 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 
 /**
  * Interface QueryBuilderManagerInterface
- * @package App\Filtration
+ * 
  */
 interface QueryBuilderManagerInterface
 {

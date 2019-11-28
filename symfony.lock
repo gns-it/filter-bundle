@@ -222,6 +222,9 @@
             "config/packages/test/monolog.yaml"
         ]
     },
+    "symfony/options-resolver": {
+        "version": "v4.4.0"
+    },
     "symfony/polyfill-ctype": {
         "version": "v1.11.0"
     },

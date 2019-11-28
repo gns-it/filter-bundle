@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\Parameter;
 
 /**
  * Class Expression
- * @package App\Filtration\Common
+ * 
  */
 class Expression
 {

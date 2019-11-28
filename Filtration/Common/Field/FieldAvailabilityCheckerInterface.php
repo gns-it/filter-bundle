@@ -7,7 +7,7 @@ namespace Slmder\SlmderFilterBundle\Filtration\Common\Field;
 
 /**
  * Interface FieldAvailabilityCheckerInterface
- * @package App\Filtration\Common\Field
+ * 
  */
 interface FieldAvailabilityCheckerInterface
 {

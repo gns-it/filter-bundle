@@ -7,7 +7,7 @@ namespace Slmder\SlmderFilterBundle\Filtration\Common\Model;
 
 /**
  * Class PropertyPath
- * @package App\Filtration\Common\Model
+ * 
  */
 class PropertyPath
 {

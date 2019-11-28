@@ -11,7 +11,7 @@ use Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPat
 
 /**
  * Class PropertyPathMaker
- * @package App\Filtration\Common
+ * 
  */
 class PropertyPathProvider implements PropertyPathProviderInterface
 {

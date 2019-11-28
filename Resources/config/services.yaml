@@ -2,6 +2,8 @@ services:
 
   filter.expression_builder:
     class:  Slmder\SlmderFilterBundle\Filtration\Common\ExpressionBuilder
+    arguments:
+      ['@doctrine.orm.entity_manager.abstract']
 
   filter.static_availability_checker:
     tags: ['filter.availability_checker']
@@ -10,7 +12,7 @@ services:
   filter.entity_info:
     class:  Slmder\SlmderFilterBundle\Filtration\Common\EntityInfo
     arguments:
-      ['@doctrine.orm.entity_manager']
+      ['@doctrine.orm.entity_manager.abstract']
 
   filter.join_maker:
     class:  Slmder\SlmderFilterBundle\Filtration\Common\JoinMaker
@@ -29,7 +31,7 @@ services:
       ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider', '%slmder_filter.default_operator%']
 
   filter.simple_filter_strategy:
-    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\SimpleFilterQueryHandlerStrategy
+    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\ConjunctionFilterQueryHandlerStrategy
     tags: ['filter.handler_strategy']
     arguments:
       ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider','%slmder_filter.default_operator%']
@@ -38,7 +40,7 @@ services:
     class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\SortQueryHandlerStrategy
     tags: ['filter.handler_strategy']
     arguments:
-      ['@filter.join_maker', '@filter.entity_info', '@filter.expression_builder', '@filter.path_provider','%slmder_filter.default_order_direction%']
+      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider','%slmder_filter.default_order_direction%']
 
   filter.query_builder_manager:
     class: Slmder\SlmderFilterBundle\Filtration\QueryBuilderManager

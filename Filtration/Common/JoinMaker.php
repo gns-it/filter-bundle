@@ -21,14 +21,27 @@ class JoinMaker implements RelationResolverInterface
      */
     private $entityInfo;
     /**
-     * @var FieldAvailabilityCheckerInterface
+     * @var FieldAvailabilityCheckerInterface[]
      */
-    private $checker;
+    private $checkers;
+    /**
+     * @var bool
+     */
+    private $checkersEnabled;
 
-    public function __construct(EntityInfo $entityInfo, FieldAvailabilityCheckerInterface $checker)
+    public function __construct(EntityInfo $entityInfo,  bool $checkersEnabled)
     {
         $this->entityInfo = $entityInfo;
-        $this->checker = $checker;
+        $this->checkers = [];
+        $this->checkersEnabled = $checkersEnabled;
+    }
+
+    /**
+     * @param FieldAvailabilityCheckerInterface $checkers
+     */
+    public function addChecker(FieldAvailabilityCheckerInterface $checkers): void
+    {
+        $this->checkers[] = $checkers;
     }
 
     /**
@@ -85,6 +98,23 @@ class JoinMaker implements RelationResolverInterface
             $isAssociation,
             $isCollectionValuedAssociation
         );
+    }
+
+    /**
+     * @param string $className
+     * @param string $field
+     */
+    public function availabilityCheck(string $className, string $field)
+    {
+        if ($this->checkersEnabled) {
+            foreach ($this->checkers as $checker) {
+                if (!$checker->available($className, $field)) {
+                    throw new NotAcceptableHttpException(
+                        "Operations with field '$className::$field' are not available."
+                    );
+                }
+            }
+        }
     }
 
     /**

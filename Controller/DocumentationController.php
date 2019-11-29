@@ -16,6 +16,6 @@ class DocumentationController extends AbstractController
      */
     public function filtration(): Response
     {
-        return $this->render('Documentation/filtration.html.twig');
+        return $this->render('@GnsFilter/Documentation/filtration.html.twig');
     }
 }

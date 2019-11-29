@@ -42,6 +42,18 @@ services:
     arguments:
       ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider','%slmder_filter.default_order_direction%']
 
+  filter.include_strategy:
+    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer\IncludeFieldsListExclusionStrategy
+    tags: ['filter.handler_strategy']
+    arguments:
+      ['@filter.entity_info', '@filter.path_provider']
+
+  filter.exclude_strategy:
+    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer\ExcludeFieldsListExclusionStrategy
+    tags: ['filter.handler_strategy']
+    arguments:
+      ['@filter.entity_info', '@filter.path_provider']
+
   filter.query_builder_manager:
     class: Slmder\SlmderFilterBundle\Filtration\QueryBuilderManager
     arguments:

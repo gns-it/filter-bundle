@@ -54,8 +54,8 @@ services:
     arguments:
       ['@filter.entity_info', '@filter.path_provider']
 
-  Gns\GnsFilterBundle\Filtration\QueryBuilderManager:
-    alias: 'filter.query_builder_manager'
+  filter.query_builder_manager:
+    class: Gns\GnsFilterBundle\Filtration\QueryBuilderManager
     public: true
     arguments:
       ['@request_stack', '@filter.disjunction_strategy', '@filter.simple_filter_strategy', '@filter.sort_strategy']

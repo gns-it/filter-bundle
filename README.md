@@ -13,7 +13,6 @@ Gns_filter:
     checkers_enabled: # bool (default true) Enables prop availability check for filter & sort.
     default_operator: # string (default like) Defines default operator when absent.
     default_order_direction: # enum (ASC,DESC) (default ASC) Defines default order direction when absent.
-    trigger_on_pagination_items: # bool (default true) Triggers filtration on knp_pager.items event.
 ```
 **Collection filters usage**
 ```$xslt

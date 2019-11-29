@@ -48,11 +48,15 @@ services:
     arguments:
       ['@filter.entity_info', '@filter.path_provider']
 
+  Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer\IncludeFieldsListExclusionStrategy: '@filter.include_strategy'
+
   filter.exclude_strategy:
     class:  Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer\ExcludeFieldsListExclusionStrategy
     tags: ['filter.handler_strategy']
     arguments:
       ['@filter.entity_info', '@filter.path_provider']
+
+  Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer\ExcludeFieldsListExclusionStrategy: '@filter.exclude_strategy'
 
   filter.query_builder_manager:
     class: Gns\GnsFilterBundle\Filtration\QueryBuilderManager

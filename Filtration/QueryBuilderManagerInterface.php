@@ -5,7 +5,7 @@
  * Time: 16:41
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration;
+namespace Gns\GnsFilterBundle\Filtration;
 
 use Doctrine\ORM\QueryBuilder;
 

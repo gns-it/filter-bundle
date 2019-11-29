@@ -3,11 +3,11 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl;
+namespace Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl;
 
 use Doctrine\ORM\QueryBuilder;
-use Slmder\SlmderFilterBundle\Filtration\Common\{Expression, ExpressionBuilder, Model\PropertyPath};
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Configuration;
+use Gns\GnsFilterBundle\Filtration\Common\{Expression, ExpressionBuilder, Model\PropertyPath};
+use Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Configuration;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -18,7 +18,7 @@ class DisjunctionQueryHandlerStrategy extends ConjunctionFilterQueryHandlerStrat
     /**
      * @var string
      */
-    const PROCESSING_KEY = 'cfFilter';
+    public const PROCESSING_KEY = 'cfFilter';
 
     /**
      * @return string

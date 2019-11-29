@@ -3,7 +3,7 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\Common\Field;
+namespace Gns\GnsFilterBundle\Filtration\Common\Field;
 
 /**
  * Interface FieldAvailabilityCheckerInterface

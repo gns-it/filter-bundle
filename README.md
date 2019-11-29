@@ -3,13 +3,13 @@
 **Instalation**
 
 ```$xslt
-composer require slmder/data-filter-bundle "1.0"
+composer require Gns/data-filter-bundle "1.0"
 ```
 
 **Configuration**
 
 ```$xslt
-slmder_filter:
+Gns_filter:
     checkers_enabled: # bool (default true) Enables prop availability check for filter & sort.
     default_operator: # string (default like) Defines default operator when absent.
     default_order_direction: # enum (ASC,DESC) (default ASC) Defines default order direction when absent.

@@ -3,7 +3,7 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\Common;
+namespace Gns\GnsFilterBundle\Filtration\Common;
 
 use Doctrine\ORM\Query\Parameter;
 

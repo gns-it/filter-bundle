@@ -3,7 +3,7 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\DependencyInjection;
+namespace Gns\GnsFilterBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -11,10 +11,10 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
- * Class SlmderFilterExtension
+ * Class GnsFilterExtension
  * @package DependencyInjection
  */
-class SlmderFilterExtension extends Extension
+class GnsFilterExtension extends Extension
 {
 
     /**

@@ -3,9 +3,9 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\DependencyInjection\Compiler;
+namespace Gns\GnsFilterBundle\DependencyInjection\Compiler;
 
-use Slmder\SlmderFilterBundle\DependencyInjection\Configuration;
+use Gns\GnsFilterBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -13,10 +13,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class SlmderFilterPass
- * @package Slmder\SlmderFilterBundle\DependencyInjection\Compiler
+ * Class GnsFilterPass
+ * @package Gns\GnsFilterBundle\DependencyInjection\Compiler
  */
-class SlmderFilterPass implements CompilerPassInterface
+class GnsFilterPass implements CompilerPassInterface
 {
     /**
      * @param ContainerBuilder $container
@@ -26,13 +26,13 @@ class SlmderFilterPass implements CompilerPassInterface
         if (!$container->has('filter.query_builder_manager')) {
             return;
         }
-        $configs = $container->getExtensionConfig('slmder_filter');
+        $configs = $container->getExtensionConfig('gns_filter');
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter('slmder_filter.checkers_enabled', $config['checkers_enabled']);
-        $container->setParameter('slmder_filter.default_operator', $config['default_operator']);
-        $container->setParameter('slmder_filter.default_order_direction', $config['default_order_direction']);
-        $container->setParameter('slmder_filter.trigger_on_pagination_items', $config['trigger_on_pagination_items']);
+        $container->setParameter('gns_filter.checkers_enabled', $config['checkers_enabled']);
+        $container->setParameter('gns_filter.default_operator', $config['default_operator']);
+        $container->setParameter('gns_filter.default_order_direction', $config['default_order_direction']);
+        $container->setParameter('gns_filter.trigger_on_pagination_items', $config['trigger_on_pagination_items']);
         $managerDef = $container->findDefinition('filter.query_builder_manager');
         $taggedStrategies = $container->findTaggedServiceIds('filter.handler_strategy');
         foreach ($taggedStrategies as $id => $tags) {

@@ -3,9 +3,9 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\Common\Field\Impl;
+namespace Gns\GnsFilterBundle\Filtration\Common\Field\Impl;
 
-use Slmder\SlmderFilterBundle\Filtration\Common\Field\FieldAvailabilityCheckerInterface;
+use Gns\GnsFilterBundle\Filtration\Common\Field\FieldAvailabilityCheckerInterface;
 
 /**
  * Class StaticFieldAvailabilityChecker

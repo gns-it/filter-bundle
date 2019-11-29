@@ -3,14 +3,11 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration;
+namespace Gns\GnsFilterBundle\Filtration;
 
 use Doctrine\ORM\QueryBuilder;
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Configuration;
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\HandlerStrategyInterface;
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\DisjunctionQueryHandlerStrategy as Disjunction;
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\ConjunctionFilterQueryHandlerStrategy as Simple;
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\SortQueryHandlerStrategy as Sort;
+use Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Configuration;
+use Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\HandlerStrategyInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -36,9 +33,8 @@ class QueryBuilderManager implements QueryBuilderManagerInterface
 
     /**
      * @param HandlerStrategyInterface $strategy
-     * @param $alias
      */
-    public function addStrategy(HandlerStrategyInterface $strategy)
+    public function addStrategy(HandlerStrategyInterface $strategy): void
     {
         $this->handlerStrategies[] = $strategy;
     }
@@ -49,14 +45,13 @@ class QueryBuilderManager implements QueryBuilderManagerInterface
      */
     function apply(QueryBuilder $queryBuilder): void
     {
-        $masterRequest = $this->requestStack->getMasterRequest();
-        $query = $masterRequest->query;
+        $query = $this->requestStack->getMasterRequest()->query;
         /** @var HandlerStrategyInterface $handler */
         foreach ($this->handlerStrategies as $handler) {
             if ($query->has($handler->getProcessingKeyName())) {
                 $params = $query->get($handler->getProcessingKeyName());
                 $defaultOptions = $handler->getDefaultOptions();
-                $config = new Configuration($handler,$params['config'] ?? [], $defaultOptions);
+                $config = new Configuration($handler, $params['config'] ?? [], $defaultOptions);
                 unset($params['config']);
                 $handler->handle($queryBuilder, $params, $config);
             }

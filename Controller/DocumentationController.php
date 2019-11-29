@@ -3,7 +3,7 @@
  * @author Sergey Hashimov <hashimov.sergey@gmail.com>
  */
 
-namespace App\Controller\Develop;
+namespace Gns\GnsFilterBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

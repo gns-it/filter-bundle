@@ -3,11 +3,11 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\Impl;
+namespace Gns\GnsFilterBundle\Filtration\Common\PropertyPathProvider\Impl;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Slmder\SlmderFilterBundle\Filtration\Common\Model\PropertyPath;
-use Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPathProviderInterface;
+use Gns\GnsFilterBundle\Filtration\Common\Model\PropertyPath;
+use Gns\GnsFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPathProviderInterface;
 
 /**
  * Class PropertyPathMaker

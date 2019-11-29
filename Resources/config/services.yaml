@@ -1,67 +1,61 @@
 services:
 
   filter.expression_builder:
-    class:  Slmder\SlmderFilterBundle\Filtration\Common\ExpressionBuilder
+    class:  Gns\GnsFilterBundle\Filtration\Common\ExpressionBuilder
     arguments:
       ['@doctrine.orm.entity_manager']
 
   filter.static_availability_checker:
     tags: ['filter.availability_checker']
-    class:  Slmder\SlmderFilterBundle\Filtration\Common\Field\Impl\StaticFieldAvailabilityChecker
+    class:  Gns\GnsFilterBundle\Filtration\Common\Field\Impl\StaticFieldAvailabilityChecker
 
   filter.entity_info:
-    class:  Slmder\SlmderFilterBundle\Filtration\Common\EntityInfo
+    class:  Gns\GnsFilterBundle\Filtration\Common\EntityInfo
     arguments:
       ['@doctrine.orm.entity_manager']
 
   filter.join_maker:
-    class:  Slmder\SlmderFilterBundle\Filtration\Common\JoinMaker
+    class:  Gns\GnsFilterBundle\Filtration\Common\JoinMaker
     arguments:
-      ['@filter.entity_info','slmder_filter.checkers_enabled']
+      ['@filter.entity_info','gns_filter.checkers_enabled']
 
   filter.path_provider:
-    class:  Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\Impl\PropertyPathProvider
+    class:  Gns\GnsFilterBundle\Filtration\Common\PropertyPathProvider\Impl\PropertyPathProvider
     arguments:
-      ['%slmder_filter.default_operator%']
+      ['%gns_filter.default_operator%']
 
   filter.disjunction_strategy:
-    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\DisjunctionQueryHandlerStrategy
+    class:  Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\DisjunctionQueryHandlerStrategy
     tags: ['filter.handler_strategy']
     arguments:
-      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider', '%slmder_filter.default_operator%']
+      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider', '%gns_filter.default_operator%']
 
   filter.simple_filter_strategy:
-    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\ConjunctionFilterQueryHandlerStrategy
+    class:  Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\ConjunctionFilterQueryHandlerStrategy
     tags: ['filter.handler_strategy']
     arguments:
-      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider','%slmder_filter.default_operator%']
+      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider','%gns_filter.default_operator%']
 
   filter.sort_strategy:
-    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\SortQueryHandlerStrategy
+    class:  Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\SortQueryHandlerStrategy
     tags: ['filter.handler_strategy']
     arguments:
-      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider','%slmder_filter.default_order_direction%']
+      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider','%gns_filter.default_order_direction%']
 
   filter.include_strategy:
-    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer\IncludeFieldsListExclusionStrategy
+    class:  Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer\IncludeFieldsListExclusionStrategy
     tags: ['filter.handler_strategy']
     arguments:
       ['@filter.entity_info', '@filter.path_provider']
 
   filter.exclude_strategy:
-    class:  Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer\ExcludeFieldsListExclusionStrategy
+    class:  Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer\ExcludeFieldsListExclusionStrategy
     tags: ['filter.handler_strategy']
     arguments:
       ['@filter.entity_info', '@filter.path_provider']
 
   filter.query_builder_manager:
-    class: Slmder\SlmderFilterBundle\Filtration\QueryBuilderManager
+    class: Gns\GnsFilterBundle\Filtration\QueryBuilderManager
     arguments:
       ['@request_stack', '@filter.disjunction_strategy', '@filter.simple_filter_strategy', '@filter.sort_strategy']
-
-  filter.filtration_subscriber:
-    class: Slmder\SlmderFilterBundle\Filtration\EventListener\KnpPaginationSubscriber
-    tags: ['kernel.event_subscriber']
-    arguments:
-      ['@filter.query_builder_manager','slmder_filter.trigger_on_pagination_items']
 

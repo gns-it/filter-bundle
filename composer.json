@@ -1,12 +1,12 @@
 {
-  "name": "slmder/data-filter-bundle",
+  "name": "gns/data-filter-bundle",
   "type": "symfony-bundle",
   "description": "Symfony data filter bundle",
   "keywords": [
     "Symfony",
     "filter"
   ],
-  "homepage": "https://github.com/sergeyKhashimov/data-filter-bundle.git",
+  "homepage": "https://gitlab.gns-it.com/gnsdeveloper/datafilter",
   "license": "MIT",
   "authors": [
     {
@@ -29,12 +29,13 @@
     "jms/serializer": "^3.3"
   },
   "require-dev": {
+    "roave/security-advisories": "dev-master",
     "symfony/maker-bundle": "^1.12",
     "symfony/debug-pack": "^1.0"
   },
   "autoload": {
     "psr-4": {
-      "Slmder\\SlmderFilterBundle\\": "/"
+      "Gns\\GnsFilterBundle\\": "/"
     }
   },
   "extra": {

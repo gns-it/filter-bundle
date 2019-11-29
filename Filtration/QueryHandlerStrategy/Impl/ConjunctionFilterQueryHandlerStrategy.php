@@ -3,19 +3,19 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl;
+namespace Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
-use Slmder\SlmderFilterBundle\Filtration\Common\{EntityInfo,
+use Gns\GnsFilterBundle\Filtration\Common\{EntityInfo,
     Expression,
     ExpressionBuilder,
     Model\PropertyPath,
     Model\RelationMeta,
     RelationResolverInterface};
-use Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPathProviderInterface;
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Configuration;
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\HandlerStrategyInterface;
+use Gns\GnsFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPathProviderInterface;
+use Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Configuration;
+use Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\HandlerStrategyInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -26,7 +26,7 @@ class ConjunctionFilterQueryHandlerStrategy implements HandlerStrategyInterface
     /**
      * @var string
      */
-    const PROCESSING_KEY = 'filter';
+    public const PROCESSING_KEY = 'filter';
 
     /**
      * @var EntityInfo

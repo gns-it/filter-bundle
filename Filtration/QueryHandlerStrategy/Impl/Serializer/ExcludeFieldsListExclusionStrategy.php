@@ -3,7 +3,7 @@
  * @author Sergey Hashimov <hashimov.sergey@gmail.com>
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer;
+namespace Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer;
 
 use JMS\Serializer\Context;
 use JMS\Serializer\Metadata\PropertyMetadata;

@@ -3,7 +3,7 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\Common\Model;
+namespace Gns\GnsFilterBundle\Filtration\Common\Model;
 
 /**
  * Class PropertyPath

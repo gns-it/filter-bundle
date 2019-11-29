@@ -1,6 +1,6 @@
 <?php
 
-namespace Slmder\SlmderFilterBundle\Filtration\Common\Model;
+namespace Gns\GnsFilterBundle\Filtration\Common\Model;
 
 class RelationMeta
 {

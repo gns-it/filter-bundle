@@ -3,22 +3,22 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle;
+namespace Gns\GnsFilterBundle;
 
-use Slmder\SlmderFilterBundle\DependencyInjection\Compiler\SlmderFilterPass;
+use Gns\GnsFilterBundle\DependencyInjection\Compiler\GnsFilterPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Class FilterBundle
- * @package App\Slmder
+ * @package App\Gns
  */
-class SlmderFilterBundle extends Bundle
+class GnsFilterBundle extends Bundle
 {
 
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
-        $container->addCompilerPass(new SlmderFilterPass());
+        $container->addCompilerPass(new GnsFilterPass());
     }
 }

@@ -3,11 +3,11 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\Common;
+namespace Gns\GnsFilterBundle\Filtration\Common;
 
 use Doctrine\ORM\QueryBuilder;
-use Slmder\SlmderFilterBundle\Filtration\Common\Field\FieldAvailabilityCheckerInterface;
-use Slmder\SlmderFilterBundle\Filtration\Common\Model\RelationMeta;
+use Gns\GnsFilterBundle\Filtration\Common\Field\FieldAvailabilityCheckerInterface;
+use Gns\GnsFilterBundle\Filtration\Common\Model\RelationMeta;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 

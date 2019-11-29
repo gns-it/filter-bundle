@@ -3,7 +3,7 @@
  * @author Sergey Hashimov <hashimov.sergey@gmail.com>
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer;
+namespace Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\Serializer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
@@ -11,11 +11,11 @@ use JMS\Serializer\Context;
 use JMS\Serializer\Exclusion\ExclusionStrategyInterface;
 use JMS\Serializer\Metadata\ClassMetadata;
 use JMS\Serializer\Metadata\PropertyMetadata;
-use Slmder\SlmderFilterBundle\Filtration\Common\EntityInfo;
-use Slmder\SlmderFilterBundle\Filtration\Common\Model\PropertyPath;
-use Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPathProviderInterface;
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Configuration;
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\HandlerStrategyInterface;
+use Gns\GnsFilterBundle\Filtration\Common\EntityInfo;
+use Gns\GnsFilterBundle\Filtration\Common\Model\PropertyPath;
+use Gns\GnsFilterBundle\Filtration\Common\PropertyPathProvider\PropertyPathProviderInterface;
+use Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Configuration;
+use Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\HandlerStrategyInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class IncludeFieldsListExclusionStrategy implements ExclusionStrategyInterface, HandlerStrategyInterface

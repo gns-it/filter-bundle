@@ -3,7 +3,7 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\Common\PropertyPathProvider;
+namespace Gns\GnsFilterBundle\Filtration\Common\PropertyPathProvider;
 
 /**
  * Interface PropertyPathProviderInterface

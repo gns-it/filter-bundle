@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy;
+namespace Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy;
 
 
 use Symfony\Component\HttpFoundation\ParameterBag;

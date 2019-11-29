@@ -3,12 +3,12 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Impl;
+namespace Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
-use Slmder\SlmderFilterBundle\Filtration\Common\{Model\PropertyPath};
-use Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy\Configuration;
+use Gns\GnsFilterBundle\Filtration\Common\{Model\PropertyPath};
+use Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Configuration;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -20,7 +20,7 @@ class SortQueryHandlerStrategy extends ConjunctionFilterQueryHandlerStrategy
     /**
      * @var string
      */
-    const PROCESSING_KEY = 'order';
+    public const PROCESSING_KEY = 'order';
 
     /**
      * @return string

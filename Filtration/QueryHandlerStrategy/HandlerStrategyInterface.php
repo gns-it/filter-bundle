@@ -3,7 +3,7 @@
  * @author Sergey Hashimov
  */
 
-namespace Slmder\SlmderFilterBundle\Filtration\QueryHandlerStrategy;
+namespace Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy;
 
 use Doctrine\ORM\QueryBuilder;
 
@@ -15,17 +15,17 @@ interface HandlerStrategyInterface
     /**
      * @var string
      */
-    const OPERATOR_KEY = 'operator';
+    public const OPERATOR_KEY = 'operator';
 
     /**
      * @var string
      */
-    const VALUE_KEY = 'value';
+    public const VALUE_KEY = 'value';
 
     /**
      * @var array
      */
-    const RESERVED_KEYS = [self::OPERATOR_KEY, self::VALUE_KEY];
+    public const RESERVED_KEYS = [self::OPERATOR_KEY, self::VALUE_KEY];
 
     /**
      * @param QueryBuilder $queryBuilder

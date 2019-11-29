@@ -1,0 +1,640 @@
+{% extends 'Documentation/base.html.twig' %}
+
+{% block title %}
+    Filtration
+{% endblock %}
+{% block css %}
+    <style>
+        .code-storm-style pre {
+            background-color: #2b2b2b;
+            border-radius: 0.35rem;
+            color: #be5f2b !important;
+        }
+
+        .code-storm-style .nav-link.active {
+            border-bottom-color: #f8f9fc;
+            color: #be5f2b;
+            font-weight: bold;
+        }
+
+        .code-storm-style .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
+            color: #e8bf55;
+        }
+
+        .code-storm-style .nav-tabs {
+            border-bottom: unset;
+        }
+
+        .code-storm-style .heading {
+            border-left: 3px solid orange;
+            border-right: 3px solid orange;
+            background-color: lightyellow;
+        }
+
+        .content-box {
+            border: 1px solid #dddfeb;
+            border-top-right-radius: 0.35rem;
+            border-top-left-radius: 0.35rem;
+        }
+
+        .code-storm-style pre {
+            white-space: pre-wrap; /* css-3 */
+            white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+            white-space: -pre-wrap; /* Opera 4-6 */
+            white-space: -o-pre-wrap; /* Opera 7 */
+            word-wrap: break-word; /* Internet Explorer 5.5+ */
+        }
+    </style>
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(e => {
+            $('#doc-tab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+
+            $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+                let id = $(e.target).attr("href").substr(1);
+                window.location.hash = id;
+            });
+
+            let hash = window.location.hash;
+            $('#doc-tab a[href="' + hash + '"]').tab('show');
+        })
+    </script>
+{% endblock %}
+{% block body %}
+    <div class="row p-3 text-dark code-storm-style">
+        <div class="col-md-10 col-sm-12 offset-md-1 offset-sm-0">
+            <p class="h1 w-100 text-center">Collection filters usage</p>
+            <p class="p-3 heading">
+                <i>This component allows you to make complex http resource queries. Gives you ability to
+                    <b><code>order</code></b>, <b><code>filter</code></b>
+                    collection in different ways. <b><code>Include</code></b> or <b><code>exclude</code></b> entity
+                    fields or relations, without interaction with
+                    backend developers!
+                </i>
+            </p>
+        </div>
+
+        <div class="col-md-10 col-sm-12 offset-md-1 offset-sm-0">
+            <ul class="nav nav-tabs" role="tablist" id="doc-tab">
+                <li class="nav-item">
+                    <a class="nav-link active" id="filter-collection-tab" data-toggle="tab" href="#filter-collection"
+                       role="tab"
+                       aria-controls="filter-collection" aria-selected="true">
+                        Filter module
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="filter-collection-disjunction-tab" data-toggle="tab"
+                       href="#filter-collection-disjunction"
+                       role="tab"
+                       aria-controls="filter-collection-disjunction" aria-selected="false">
+                        Disjunction filter module
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " id="sort-collection-tab" data-toggle="tab" href="#sort-collection" role="tab"
+                       aria-controls="sort-collection" aria-selected="false">
+                        Sort module
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " id="serialization-tab" data-toggle="tab" href="#serialization" role="tab"
+                       aria-controls="serialization" aria-selected="false">
+                        Serialization module
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " id="operators-tab" data-toggle="tab" href="#operators" role="tab"
+                       aria-controls="operators" aria-selected="false">
+                        Operators
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " id="config-tab" data-toggle="tab" href="#config" role="tab"
+                       aria-controls="operators" aria-selected="false">
+                        Configuration
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-10 col-sm-12 offset-md-1 offset-sm-0 content-box p-3">
+            <div class="tab-content">
+                <div class="tab-pane fade" id="sort-collection" role="tabpanel"
+                     aria-labelledby="sort-collection-tab">
+                    <div class="col text-dark">
+                        <h4>Sort</h4>
+                        <p>
+                            Sorting http queries looks same as filter queries, except it is only available two
+                            values(<kbd>ASC</kbd> and <kbd>DESC</kbd>),
+                            field list arrays must be under <kbd>order</kbd> keyword.
+                        </p>
+                        <code>
+                            curl host:port/api/v1/event-group?order[description][value]=ASC<br>
+                            curl host:port/api/v1/event-group?order[description]=ASC<br>
+                            curl host:port/api/v1/event-group?order[city.name]=DESC<br>
+                            curl host:port/api/v1/event-group?order[city.createdBy.name]=DESC<br>
+                            curl host:port/api/v1/event-group?order[createdAt]=DESC<br>
+                        </code>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="config" role="tabpanel"
+                     aria-labelledby="config-tab">
+                    <div class="col text-dark">
+                        <h4>Configuration</h4>
+                        <p>
+                            Configuration allows you define custom value delimiter provided for each module.
+                        </p>
+                        <code>
+                            curl host:port/api/v1/user?include[config][value_delimiter]=@<br>
+                            curl host:port/api/v1/user?exclude[config][value_delimiter]=@<br>
+                            curl host:port/api/v1/user?filter[config][value_delimiter]=@<br>
+                            curl host:port/api/v1/user?cfFilter[config][value_delimiter]=@<br>
+                        </code>
+                        <br>
+                        <p>
+                            <kbd>[config][value_delimiter]=@</kbd> triggers delimiter change.
+                            Then you should use this delimiter in module values
+                        </p>
+
+                        <code>
+                            host:port/api/v1/event-group?filter[city.uuid.value]=uuid_1@uuid_2@uuid_n&filter[city.uuid.operator]=in
+                        </code>
+                    </div>
+                </div>
+                <div class="tab-pane show active fade" id="filter-collection" role="tabpanel"
+                     aria-labelledby="how-to-query-tab">
+                    <div class="col text-dark">
+                        <h4>Filtration</h4>
+                        <p>
+                            Every resource list endpoint represents single class of entities.
+                            E.g in the below example resource endpoint represents Event Group class.
+                        </p>
+                        <code>
+                            curl host:port/api/v1/event-group<br>
+                        </code>
+                        <br>
+                        <p>
+                            To enable collection filter you must provide full path to the field
+                            by witch you want to filter current collection of entities, under the keyword
+                            <kbd>filter</kbd>.
+                        </p>
+                        <p>
+                            <kbd>value</kbd> keyword tells to the plugin, that provided expression after <kbd>=</kbd>
+                            mark will be used as value which will be searched for provided field path.
+                        </p>
+                        <code>
+                            curl host:port/api/v1/event-group?filter[description][value]=some_text<br>
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                Output (pseudo) SQL:
+                            </i>
+                            <code class="text-danger">
+                                "SELECT * FROM event_group WHERE description LIKE %some_text%"
+                            </code>
+                        </p>
+                        <br>
+                        <p>
+                            Multiple provided paths will occur in conjunction (AND) SQL statement.
+                        </p>
+                        <code>
+                            curl host:port/api/v1/user?filter[profileName]=some_text&filter[email]=other_text<br>
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                Output (pseudo) SQL:
+                            </i>
+                            <code class="text-danger">
+                                "SELECT * FROM user WHERE profileName LIKE %some_text% AND email LIKE %other_text%"
+                            </code>
+                        </p>
+                        <br>
+                        <p>
+                            By default, operator for generated sql query will be <kbd>LIKE</kbd>,
+                            and the <kbd>value</kbd> keyword can be omitted. Below http query will output will be same
+                            SQL as in previous example.
+                        </p>
+                        <code>
+                            curl host:port/api/v1/event-group?filter[description]=some_text<br>
+                        </code>
+                        <br>
+                        <p>
+                            To enable different operator, that are listed in Operators section, you must provide full
+                            path to the field ending with <kbd>operator</kbd> keyword as shown below.
+                        </p>
+                        <code>
+                            curl
+                            host:port/api/v1/event-group?filter[category][name][value]=travel&filter[category][name][operator]=eq<br>
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                Output (pseudo) SQL:
+                            </i>
+                            <code class="text-danger">
+                                "SELECT * FROM event_group LEFT JOIN category WHERE category.name = 'travel'"
+                            </code>
+                        </p>
+                        <br>
+                        <p>
+                            Example of deep relation filtration.
+                        </p>
+                        <code>
+                            curl host:port/api/v1/event-group?filter[category][createdBy][profileName]=bob
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                Output (pseudo) SQL:
+                            </i>
+                            <code class="text-danger">
+                                "SELECT * FROM event_group e LEFT JOIN category c LEFT JOIN user u WHERE u.profileName
+                                LIKE
+                                %bob%"
+                            </code>
+                        </p>
+                        <br>
+                        <p>
+                            Plugin also supports Dot Notation.
+                        </p>
+                        <code>
+                            curl
+                            host:port/api/v1/event-group?filter[category.createdBy.profileName.value]=bob&filter[category.createdBy.profileName.operator]=like
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                Output (pseudo) SQL:
+                            </i>
+                            <code class="text-danger">
+                                Same as previous example.
+                            </code>
+                        </p>
+                        <hr>
+                        <h4>Samples</h4>
+                        <br>
+                        <p>
+                            BETWEEN example:
+                            <br>
+                            <small>
+                                <small>NOT BETWEEN works same</small>
+                            </small>
+                        </p>
+                        <code>
+                            curl
+                            host:port/api/v1/event-group?filter[createdAt.value]=2019-01-21|2019-05-16&filter[createdAt.operator]=bwn
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                Output (pseudo) SQL:
+                            </i>
+                            <code class="text-danger">
+                                "SELECT * FROM event_group WHERE createdAt BETWEEN '2019-01-21' AND '2019-05-16'"
+                            </code>
+                        </p>
+                        <br>
+                        <p>
+                            IN example:
+                            <br>
+                            <small>
+                                <small>NOT IN works same</small>
+                            </small>
+                        </p>
+                        <code>
+                            curl
+                            host:port/api/v1/event-group?filter[city.uuid.value]=uuid_1|uuid_2|uuid_n&filter[city.uuid.operator]=in
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                Output (pseudo) SQL:
+                            </i>
+                            <code class="text-danger">
+                                "SELECT * FROM event_group e LEFT JOIN city c WHERE c.uuid IN (uuid_1,uuid_2,uuid_n)"
+                            </code>
+                        </p>
+                        <br>
+                        <p>
+                            LESS THAN example:
+                            <br>
+                            <small>
+                                <small>GREATER THAN works same</small>
+                            </small>
+                        </p>
+                        <code>
+                            curl
+                            host:port/api/v1/event-group?filter[createdAt.value]=2019-01-21&filter[createdAt.operator]=lt
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                Output (pseudo) SQL:
+                            </i>
+                            <code class="text-danger">
+                                "SELECT * FROM event_group WHERE createdAt < '2019-01-21'"
+                            </code>
+                        </p>
+                        <br>
+                        <p>
+                            CONTAINS example:
+                            <br>
+                            <small>
+                                <small>NOT CONTAINS works same</small>
+                            </small>
+                        </p>
+                        <i class="text-dark">
+                            <small>
+                                Operator useful for many-to-many relations filtration, for example, if you need to find all event having category (uuid):
+                            </small><br>
+                        </i>
+                        <code>
+                            curl
+                            host:port/api/v1/event?filter[category.value]=uuid&filter[category.operator]=contains
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                Output (pseudo) SQL:
+                            </i>
+                            <code class="text-danger">
+                                "SELECT * FROM event e LEFT JOIN event_category ec LEFT JOIN category c WHERE EXISTS (SELECT 1 FROM event_category ec2 INNER JOIN category c2 WHERE ec2.event = e.id AND c2.uuid = 'uuid' )"
+                            </code>
+                        </p>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="serialization" role="tabpanel"
+                     aria-labelledby="serialization-tab">
+                    <div class="col-sm text-dark">
+                        <h4>Serialization</h4>
+                        <p>
+                            Serialization context can be changed in runtime through defining <kbd>include</kbd> or <kbd>exclude</kbd>
+                            fields arrays.
+                        </p>
+                        <p>
+                            For example, to query additional fields of User entity, that are missed in current
+                            serialization context,
+                            you must provide full path to the <b>RELATION</b>!!!
+                            for witch you want to add additional fields, under the keyword <kbd>include</kbd>.
+                        </p>
+                        <p>
+                            <kbd>self</kbd> keyword represents root entities class, in example below it will be User
+                            class
+                        </p>
+                        <code>
+                            curl host:port/api/v1/user?include[self]=email|profileName|role
+                            <br>
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                Serialized response of such query will include those fields.
+                            </i>
+                        </p>
+                        <pre class="text-danger">
+
+                            {
+                                ...
+                                "email":"bob@email.com"
+                                "profileName":"Brother Bob"
+                                "role":"Customer"
+                            }
+                        </pre>
+                        <p>
+                            Deep relation including/excluding works as described in filtration chapter:
+                        </p>
+                        <code>
+                            curl
+                            host:port/api/v1/event-group?include[category]=name|createdAt|updatedAt&include[city.createdBy]=email|name
+                            <br>
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                Serialized response of such query will include those fields.
+                            </i>
+                        </p>
+                        <pre>
+
+                            {
+                                ...
+                                "category": {
+                                    ...
+                                    "name":"Travel"
+                                    "createdAt":"2018-09-21 12:02:23"
+                                    "updatedAt":"2018-09-21 12:02:23"
+                                }
+                                "city": {
+                                    ...
+                                    "createdBy": {
+                                        ...
+                                        "name":"Bob"
+                                        "email":"bob@email.com"
+                                     }
+                                }
+                            }
+                        </pre>
+                        <div class="alert alert-danger" role="alert">
+                            Fields you want to include / exclude must be present in resource Model, otherwise exception
+                            will be thrown!
+                        </div>
+                        <p>
+                            Exclude functionality works same but fields array must be under keyword <kbd>exclude</kbd>.
+                        </p>
+                        <code>
+                            curl host:port/api/v1/user?exclude[self]=email|profileName|role
+                            <br>
+                        </code>
+                        <p>
+                            <i class="text-info">
+                                The listed fields will be absent in the serialized response to such a request.
+                            </i>
+                        </p>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="filter-collection-disjunction" role="tabpanel"
+                     aria-labelledby="filter-collection-disjunction-tab">
+                    <div class="col text-dark">
+                        <h4>Disjunction</h4>
+                        <p>
+                            Disjunction (OR) filter is an extension for conjunction (AND) filter and it is useful to
+                            filter rows by multiple fields. Conjunction filter
+                            works as a wrapper for it.
+                            For example, let say we need output rows of SQL query like below.
+                        </p>
+                        <code>
+                            <i class="text-info">
+                                Pseudo SQL:
+                            </i>
+                            SELECT * FROM user WHERE <i class="text-dark">(</i> name LIKE %some_string% <i
+                                    class="text-dark">OR</i> profileName LIKE %another_string%<i class="text-dark">)</i>
+                            <i class="text-dark">AND</i> <i class="text-dark">(</i>email LIKE %some_string% <i
+                                    class="text-dark">OR</i> role LIKE %another_string%<i class="text-dark">)</i>
+                        </code>
+                        <p>
+                            Input http query for this SQL must look like below. <br>
+                        </p>
+                        <code>
+                            curl
+                            host:port/api/v1/user?cfFilter[0][name]=some_string&cfFilter[0][profileName]=another_string&cfFilter[1][email]=some_string&cfFilter[1][role]=another_string
+                        </code>
+                        <br>
+                        <p>
+                            Dot notation and operator choice also supported.
+                        </p>
+                        <code>
+                            curl
+                            host:port/api/v1/event-group?cfFilter[0][createdBy.name]=some_string&cfFilter[0][createdBy.email.value]=another_string&cfFilter[0][createdBy.email.operator]=eq&cfFilter[1][city.region.name]=some_string&cfFilter[1][city.country.code]=another_string
+                        </code>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="operators" role="tabpanel" aria-labelledby="operators-tab">
+                    <h4>Operators list</h4>
+
+                    <table class="table table-hover table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="width: 30%">Operator</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>eq</td>
+                            <td>Equal
+                                <small class="operator-description-info">(=)</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>neq</td>
+                            <td>Not equal
+                                <small class="operator-description-info">(<>)</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>lt</td>
+                            <td>Less then
+                                <small class="operator-description-info">(<)</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>lte</td>
+                            <td> Less than or equal
+                                <small class="operator-description-info">(<=)</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ltel</td>
+                            <td>Less than or equal
+                                <small class="operator-description-info">(<= with time to
+                                    23:59:59)
+                                </small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>gt</td>
+                            <td>Greater than
+                                <small class="operator-description-info">(>)</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>gte</td>
+                            <td>Greater than or equal
+                                <small class="operator-description-info">(>=)</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>gtef</td>
+                            <td>Greater than or equal
+                                <small class="operator-description-info">(>= with time to
+                                    00:00:00)
+                                </small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>in</td>
+                            <td>In
+                                <small class="operator-description-info">(IN delimiter "|")</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>nin</td>
+                            <td>Not in
+                                <small class="operator-description-info">(NOT IN delimiter "|")</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>like</td>
+                            <td>Like
+                                <small class="operator-description-info">(LIKE)</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>not_like</td>
+                            <td> Not like
+                                <small class="operator-description-info">(NOT LIKE)</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>bwn</td>
+                            <td> Between
+                                <small class="operator-description-info">(BETWEEN)</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>not_btw</td>
+                            <td>Not between
+                                <small class="operator-description-info">(NOT BETWEEN)</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>is_null</td>
+                            <td>Is Null
+                                <small class="operator-description-info">(t.f IS NULL) (provided value must be
+                                    any)
+                                </small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>isnt_null</td>
+                            <td>Is not Null
+                                <small class="operator-description-info">(t.f IS NOT NULL) (provided value
+                                    must
+                                    be
+                                    any)
+                                </small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>contains</td>
+                            <td>Contains
+                                <small class="operator-description-info">
+                                    (EXISTS (
+                                    SELECT t.f FROM t WHERE t.p = val
+                                    ))
+                                </small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>not_contains</td>
+                            <td>Not contains
+                                <small class="operator-description-info">
+                                    (NOT EXISTS (
+                                    SELECT t.f FROM t WHERE t.p = val
+                                    ))
+                                </small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>hv_count_eq</td>
+                            <td>Having count
+                                <small class="operator-description-info">(HAVING COUNT(t.f) =
+                                    :count)
+                                </small>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+

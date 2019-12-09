@@ -30,6 +30,12 @@ services:
     arguments:
       ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider', '%gns_filter.default_operator%']
 
+  filter.outer_disjunction_strategy:
+    class:  Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\OuterDisjunctionQueryHandlerStrategy
+    tags: ['filter.handler_strategy']
+    arguments:
+      ['@filter.entity_info', '@filter.join_maker', '@filter.expression_builder', '@filter.path_provider', '%gns_filter.default_operator%']
+
   filter.simple_filter_strategy:
     class:  Gns\GnsFilterBundle\Filtration\QueryHandlerStrategy\Impl\ConjunctionFilterQueryHandlerStrategy
     tags: ['filter.handler_strategy']

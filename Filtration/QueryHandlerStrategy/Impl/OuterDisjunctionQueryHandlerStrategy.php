@@ -54,7 +54,7 @@ class OuterDisjunctionQueryHandlerStrategy extends ConjunctionFilterQueryHandler
                 }
                 $expressions[] = $this->buildExpression($operator, $meta, $path);
             }
-            $orxs[]= $queryBuilder->expr()->orX(
+            $orxs[] = $queryBuilder->expr()->orX(
                 $queryBuilder->expr()->andX(
                     ...array_map(
                         static function (Expression $e) {
@@ -68,6 +68,6 @@ class OuterDisjunctionQueryHandlerStrategy extends ConjunctionFilterQueryHandler
                 $this->bindParameters($queryBuilder, $expression);
             }
         }
-        $queryBuilder->andWhere(...$orxs);
+        $queryBuilder->andWhere($queryBuilder->expr()->orX(...$orxs));
     }
 }

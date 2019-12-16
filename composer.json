@@ -1,12 +1,12 @@
 {
-  "name": "gns/data-filter-bundle",
+  "name": "gns/filter-bundle",
   "type": "symfony-bundle",
-  "description": "Symfony data filter bundle",
+  "description": "Symfony filter bundle",
   "keywords": [
     "Symfony",
     "filter"
   ],
-  "homepage": "https://gitlab.gns-it.com/gnsdeveloper/datafilter",
+  "homepage": "https://github.com/gns-it/filter-bundle",
   "license": "MIT",
   "authors": [
     {

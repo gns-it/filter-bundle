@@ -64,4 +64,11 @@ services:
     arguments:
       ['@request_stack', '@filter.disjunction_strategy', '@filter.simple_filter_strategy', '@filter.sort_strategy']
 
+  filter.inex_bridge:
+    class: Gns\GnsFilterBundle\Filtration\InexBridge
+    public: true
+    arguments:
+      ['@doctrine.orm.entity_manager', '@filter.include_strategy', '@filter.exclude_strategy']
+
+  Gns\GnsFilterBundle\Filtration\InexBridge: '@filter.inex_bridge'
   Gns\GnsFilterBundle\Filtration\QueryBuilderManagerInterface: '@filter.query_builder_manager'

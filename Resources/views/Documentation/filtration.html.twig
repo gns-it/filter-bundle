@@ -96,6 +96,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" id="filter-outer-disjunction-tab" data-toggle="tab"
+                       href="#filter-outer-disjunction"
+                       role="tab"
+                       aria-controls="filter-outer-disjunction-disjunction" aria-selected="false">
+                        Outer disjunction filter module
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link " id="sort-collection-tab" data-toggle="tab" href="#sort-collection" role="tab"
                        aria-controls="sort-collection" aria-selected="false">
                         Sort module
@@ -481,6 +489,48 @@
                         <code>
                             curl
                             host:port/api/v1/event-group?cfFilter[0][createdBy.name]=some_string&cfFilter[0][createdBy.email.value]=another_string&cfFilter[0][createdBy.email.operator]=eq&cfFilter[1][city.region.name]=some_string&cfFilter[1][city.country.code]=another_string
+                        </code>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="filter-outer-disjunction" role="tabpanel"
+                     aria-labelledby="filter-outer-disjunction-tab">
+                    <div class="col text-dark">
+                        <h4>Outer disjunction</h4>
+                        <p>
+                            Outer disjunction allows you to filter collection by some field throught several values
+                            For example, we want to get a list of posts that have at least one of the listed tags
+                        </p>
+                        <code>
+                            <i class="text-info">
+                                Pseudo SQL:
+                            </i>
+                            SELECT * FROM post WHERE  text LIKE %some_tag_name% <i class="text-dark">OR</i> text LIKE %another_tag_name%
+                        </code>
+                        <p>
+                            Input http query for this SQL must look like below. <br>
+                        </p>
+                        <code>
+                            curl
+                            host:port/api/v1/post?odFilter[0][text]=some_tag_name&odFilter[1][text]=another_tag_name
+                        </code>
+                        <br>
+                        <p>
+                            All expressions under the key <kbd>odFilter</kbd> will be grouped in brackets <kbd> () </kbd>
+                        </p>
+                        <p>
+                            You can define common condition <br>
+                            For example, we want to get a list of posts that have at least one of the listed tags, and all of them must be from a specific author:
+                        </p>
+                        <code>
+                            curl
+                            host:port/api/v1/post?odFilter[0][text]=some_tag_name&odFilter[1][text]=another_tag_name&filter[createdBy.uuid.value]=author_uuid&filter[createdBy.uuid.operator]=eq
+                        </code>
+                        <p></p>
+                        <code>
+                            <i class="text-info">
+                                Pseudo SQL:
+                            </i>
+                            SELECT * FROM post LEFT JOIN user u WHERE <i class="text-dark">(</i>text LIKE %some_tag_name% <i class="text-dark">OR</i> text LIKE %another_tag_name%<i class="text-dark">)</i> AND u.uuid = 'author_uuid'
                         </code>
                     </div>
                 </div>

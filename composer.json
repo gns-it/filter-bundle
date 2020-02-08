@@ -24,7 +24,7 @@
     "symfony/framework-bundle": "~5",
     "knplabs/knp-paginator-bundle": "^5",
     "doctrine/orm": "^2.5.11",
-    "symfony/options-resolver": "~4.1",
+    "symfony/options-resolver": "~5",
     "doctrine/doctrine-bundle": "^2.0",
     "jms/serializer": "^3.3"
   },

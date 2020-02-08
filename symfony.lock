@@ -131,10 +131,16 @@
     "nikic/php-parser": {
         "version": "v4.2.2"
     },
+    "php": {
+        "version": "7.3"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
     "psr/container": {
+        "version": "1.0.0"
+    },
+    "psr/event-dispatcher": {
         "version": "1.0.0"
     },
     "psr/log": {
@@ -164,9 +170,6 @@
             "bin/console",
             "config/bootstrap.php"
         ]
-    },
-    "symfony/debug": {
-        "version": "v4.3.3"
     },
     "symfony/debug-bundle": {
         "version": "4.1",
